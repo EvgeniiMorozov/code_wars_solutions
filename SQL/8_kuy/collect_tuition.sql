@@ -1,0 +1,6 @@
+SELECT *
+FROM students
+WHERE not tuition_received;
+
+
+-- SELECT * from students where tuition_received = FALSE
