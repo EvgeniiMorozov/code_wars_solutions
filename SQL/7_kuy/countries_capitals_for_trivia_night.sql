@@ -1,5 +1,6 @@
 SELECT capital
 FROM countries
-WHERE country = ("Africa", "Afrika")
+ORDER BY capital
+WHERE country IN ("Africa", "Afrika")
     AND capital LIKE "E"
 LIMIT 3;
