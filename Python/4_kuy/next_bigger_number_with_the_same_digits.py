@@ -12,6 +12,8 @@ def next_bigger(num: int) -> int:
 
 """
 
+from itertools import permutations
+
 def next_bigger(num: int) -> int:
     if num < 12:
         return -1
@@ -19,6 +21,19 @@ def next_bigger(num: int) -> int:
     if nums[-1] == num:
         return -1
     return nums[nums.index(num)+1]
+
+
+def next_bigger(n):
+    s = list(str(n))
+    for i in range(len(s)-2,-1,-1):
+        if s[i] < s[i+1]:
+            t = s[i:]
+            m = min(filter(lambda x: x>t[0], t))
+            t.remove(m)
+            t.sort()
+            s[i:] = [m] + t
+            return int("".join(s))
+    return -1
 
 """
 
