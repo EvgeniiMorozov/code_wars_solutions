@@ -1,52 +1,3 @@
-"""
-def quadratic_builder(expression: str) -> str:
-    nums = []
-    for i in range(len(expression)):
-        if expression[i].isdigit():
-            if expression[i - 1] == "-":
-                nums.append(int(expression[i]) * -1)
-            else:
-                nums.append(int(expression[i]))
-        elif expression[i].isalpha():
-            letter = expression[i]
-            if expression[i - 1] == "-":
-                nums.append(-1)
-            if expression[i - 1] == "(":
-                nums.append(1)
-
-    multipliers = [nums[0] * nums[2], nums[0] * nums[3] + nums[1] * nums[2], nums[1] * nums[3]]
-
-    chunks = []
-    for i, num in enumerate(multipliers, start=1):
-        if num == 0:
-            chunks.append("")
-        elif num == [1, -1]:
-            if i == 1:
-                chunks.append(f"{letter}^2") if num == 1 else chunks.append(f"-{letter}^2")
-            elif i == 2:
-                chunks.append(f"+{letter}") if num == 1 else chunks.append(f"-{letter}")
-            elif i == 3:
-                chunks.append(str(num))
-        elif num > 1 or num < -1:
-            if i == 1:
-                chunks.append(f"{num}{letter}^2") if num > 1 else chunks.append(f"{num}{letter}^2")
-            elif i == 2:
-                chunks.append(f"+{num}{letter}") if num > 1 else chunks.append(f"{num}{letter}")
-            elif i == 3:
-                chunks.append(f"+{num}") if num > 1 else chunks.append(f"{num}")
-
-    return "".join(chunks)
-"""
-# from re import findall as re_findall
-#
-#
-# def quadratic_builder(expression: str) -> str:
-#     pattern = r"^\((-?[1-9]?)([a-z])([+|-])([1-9])\)\((-?[1-9]?)([a-z])([+|-])([1-9])\)"
-#     arr = re_findall(pattern, expression)
-#     expr_tuple = sum(expression, ())
-#     # [('', 'x', '+', '2', '', 'x', '+', '3')]
-#     a = expr_tuple
-
 def parse(expr: str) -> dict:
     coeff = []
     prev = "("
@@ -112,7 +63,7 @@ import re
 def quadratic_builder(expression):
     # replace -x with -1x in the expression
     expression = re.sub("-([a-z])", r"-1\1", expression)
-    
+
     # extract constants and variable name
     m, x, n, p, _, q = re.findall("""
         \(          # opening bracket
@@ -127,24 +78,24 @@ def quadratic_builder(expression):
         \)          # closing bracket
         """, expression, flags=re.VERBOSE).pop()
     m, n, p, q = map(int, [m or 1, n, p or 1, q])
-    
+
     # calculate constants of the result
     a, b, c = m * p, m * q + n * p, n * q
-    
+
     # construct output
     A = f"{a}{x}^2"     if a != 0 else ""
     B = f"{b:+}{x}"     if b != 0 else ""
     C = f"{c:+}"        if c != 0 else ""
-    
+
     # remove 1s
     result = re.sub(r"(\b|\+|-)1" + x, r"\1" + x, A + B + C )
-    
+
     return result
 
 
 import re
 
-def quadratic_builder(_):  
+def quadratic_builder(_):
     a,b,c,d=map(lambda _:int((1,(-1,_)[_>'-'])[bool(_)]),re.findall(r'\((-?\d*)\w\+?(-?\d+)\)\((-?\d*)\w\+?(-?\d+)\)',_)[0])
     return re.sub('(^|(?<=\D))1(?=\D|$)|(\D|^)0(\w|$)','',f"{a*c}{(z:=re.search('(?i)[a-z]',_)[0])}^2+{a*d+b*c}{z}+{b*d}".replace('+-','-'))
 
