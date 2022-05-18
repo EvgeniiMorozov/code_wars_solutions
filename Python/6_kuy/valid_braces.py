@@ -8,17 +8,16 @@ def valid_braces(string: str) -> bool:
 
         if el in opened:
             stack.append(el)
+        elif el == closed[0] and stack[-1] == opened[0]:
+            stack.pop()
+        elif el == closed[1] and stack[-1] == opened[1]:
+            stack.pop()
+        elif el == closed[2] and stack[-1] == opened[2]:
+            stack.pop()
         else:
-            if el == closed[0] and stack[-1] == opened[0]:
-                stack.pop()
-            elif el == closed[1] and stack[-1] == opened[1]:
-                stack.pop()
-            elif el == closed[2] and stack[-1] == opened[2]:
-                stack.pop()
-            else:
-                return False
+            return False
 
-    return len(stack) == 0
+    return not stack
 
 
 if __name__ == "__main__":
@@ -27,24 +26,23 @@ if __name__ == "__main__":
     print(valid_braces("([}{])"))
     print(valid_braces("{}({})[]"))
 
-"""
-def validBraces(string):
+
+def valid_braces(string):
     braces = {"(": ")", "[": "]", "{": "}"}
     stack = []
     for character in string:
-        if character in braces.keys():
+        if character in braces:
             stack.append(character)
-        else:
-            if len(stack) == 0 or braces[stack.pop()] != character:
-                return False
-    return len(stack) == 0
+        elif not stack or braces[stack.pop()] != character:
+            return False
+    return not stack
 
 
+"""
 def validBraces(s):
   while '{}' in s or '()' in s or '[]' in s:
       s=s.replace('{}','')
       s=s.replace('[]','')
       s=s.replace('()','')
   return s==''
-
 """
