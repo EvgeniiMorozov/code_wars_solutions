@@ -21,23 +21,16 @@ def tickets(people):
         if bill == 25:
             cash_25 += 1
             continue
-        if bill == 50:
-            if cash_25 >= 1:
-                cash_25 -= 1
-                cash_50 += 1
-                continue
-            else:
-                return "NO"
-        if bill == 100:
-            if cash_50 >= 1 and cash_25 >= 1:
-                cash_50 -= 1
-                cash_25 -= 1
-                continue
-            elif cash_25 >= 3:
-                cash_25 -= 3
-                continue
-            else:
-                return "NO"
+        if bill == 100 and cash_50 >= 1 and cash_25 >= 1:
+            cash_50 -= 1
+            cash_25 -= 1
+        elif bill == 100 and cash_25 >= 3:
+            cash_25 -= 3
+        elif bill == 100 or bill == 50 and cash_25 < 1:
+            return "NO"
+        elif bill == 50:
+            cash_25 -= 1
+            cash_50 += 1
     return "YES"
 
 
