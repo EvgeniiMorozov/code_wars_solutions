@@ -27,6 +27,7 @@ if __name__ == "__main__":
     print(valid_braces("{}({})[]"))
 
 
+"""
 def valid_braces(string):
     braces = {"(": ")", "[": "]", "{": "}"}
     stack = []
@@ -37,8 +38,6 @@ def valid_braces(string):
             return False
     return not stack
 
-
-"""
 def validBraces(s):
   while '{}' in s or '()' in s or '[]' in s:
       s=s.replace('{}','')
